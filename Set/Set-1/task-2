@@ -1,0 +1,66 @@
+from time import perf_counter
+from statistics import median
+
+
+class ChainedHashTable:
+    def __init__(self, capacity=131071):
+        self.capacity = capacity
+        self.buckets = [[] for _ in range(capacity)]
+
+    def _index(self, sku):
+        return int(sku.split("-")[1]) % self.capacity
+
+    def insert(self, sku, product):
+        bucket = self.buckets[self._index(sku)]
+        for entry in bucket:
+            if entry[0] == sku:
+                entry[1] = product
+                return
+        bucket.append([sku, product])
+
+    def search(self, sku):
+        for key, product in self.buckets[self._index(sku)]:
+            if key == sku:
+                return product
+        return None
+
+
+small = ChainedHashTable(5)
+small.insert("SKU-00001", "Rice")
+small.insert("SKU-00006", "Sugar")
+print("Collision bucket:", small._index("SKU-00001"))
+print("Chained entries:", small.buckets[small._index("SKU-00001")])
+print("Lookup SKU-00006:", small.search("SKU-00006"))
+
+count = 100000
+custom = ChainedHashTable()
+builtin = {}
+for i in range(count):
+    sku = f"SKU-{i:05d}"
+    product = f"Product {i}"
+    custom.insert(sku, product)
+    builtin[sku] = product
+
+queries = [f"SKU-{i:05d}" for i in range(0, count, 10)]
+
+
+def benchmark(lookup, rounds=7):
+    durations = []
+    checksum = 0
+    for _ in range(rounds):
+        start = perf_counter()
+        for sku in queries:
+            checksum += lookup(sku) is not None
+        durations.append(perf_counter() - start)
+    return median(durations), checksum
+
+
+custom_time, custom_found = benchmark(custom.search)
+builtin_time, builtin_found = benchmark(builtin.get)
+print("SKU records:", count)
+print("Queries per round:", len(queries))
+print("Custom matches across rounds:", custom_found)
+print("Dictionary matches across rounds:", builtin_found)
+print(f"Custom chained table median: {custom_time * 1000:.3f} ms")
+print(f"Built-in dictionary median: {builtin_time * 1000:.3f} ms")
+print("Faster in this run:", "Built-in dictionary" if builtin_time < custom_time else "Custom chained table")
