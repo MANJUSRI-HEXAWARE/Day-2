@@ -7,7 +7,6 @@ class HubNetwork:
         for neighbors in list(self.routes.values()):
             for hub in neighbors:
                 self.routes.setdefault(hub, [])
-
     def shortest_route(self, start, destination):
         if start not in self.routes or destination not in self.routes:
             return []
