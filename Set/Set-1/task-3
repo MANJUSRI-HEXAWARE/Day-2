@@ -1,0 +1,41 @@
+from collections import deque
+def deployment_order(dependencies):
+    services = set(dependencies)
+    for requirements in dependencies.values():
+        services.update(requirements)
+    outgoing = {service: set() for service in services}
+    indegree = {service: 0 for service in services}
+    for service, requirements in dependencies.items():
+        for requirement in requirements:
+            outgoing[requirement].add(service)
+            indegree[service] += 1
+    ready = deque(sorted(service for service in services if indegree[service] == 0))
+    order = []
+    while ready:
+        service = ready.popleft()
+        order.append(service)
+        for dependent in sorted(outgoing[service]):
+            indegree[dependent] -= 1
+            if indegree[dependent] == 0:
+                ready.append(dependent)
+    if len(order) != len(services):
+        raise ValueError("Circular dependency detected")
+    return order
+dependencies = {
+    "Cart": ["Pricing", "Inventory"],
+    "Pricing": ["Catalogue"],
+    "Inventory": ["Catalogue"],
+    "Checkout": ["Cart", "Payment"],
+    "Payment": ["User"],
+    "Notification": ["Checkout"],
+    "Catalogue": [],
+    "User": []
+}
+print("Valid deployment order (BFS topological sort):")
+print(" -> ".join(deployment_order(dependencies)))
+cyclic = {service: list(requirements) for service, requirements in dependencies.items()}
+cyclic["Catalogue"].append("Checkout")
+try:
+    deployment_order(cyclic)
+except ValueError as error:
+    print("Cycle test:", error)
