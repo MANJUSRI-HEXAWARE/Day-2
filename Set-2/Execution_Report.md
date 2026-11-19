@@ -38,7 +38,7 @@ The test suite includes BST empty traversal/search, duplicate insertion, found/m
 
 ## Actual Execution Output
 
-### 01_Claim_BST.py
+### task-1.py
 
 ```text
 Inorder (sorted): [1010, 1025, 1030, 1040, 1045, 1050, 1060, 1075, 1080, 1090]
@@ -49,14 +49,14 @@ Search 9999: False
 Insert duplicate 1040: False
 ```
 
-### 02_Duplicate_Claims.py
+### task-2.py
 
 ```text
 Duplicate (claim, original) pairs: [('CL002', 'CL001'), ('CL004', 'CL003')]
 Empty input: []
 ```
 
-### 03_Approval_Graph.py
+### task-3.py
 
 ```text
 Shortest path Registration to Settlement: ['Registration', 'Assessment', 'Settlement']
@@ -64,7 +64,7 @@ Cycle in approval graph: False
 Cycle after Settlement to Assessment: True
 ```
 
-### 04_Claim_Spike_Window.py
+### task-4.py
 
 ```text
 Daily claims: [80, 110, 125, 140, 90, 105, 130, 160, 115, 145, 100, 120, 135]
@@ -74,7 +74,7 @@ Through day: 10
 Empty input: (0, None, None)
 ```
 
-### 05_Merge_Claims.py
+### task-5.py
 
 ```text
 North office: [1001, 1004, 1008, 1012, 1012]
@@ -83,7 +83,7 @@ Merged claims: [1001, 1002, 1004, 1004, 1008, 1009, 1012, 1012, 1015]
 Empty inputs: []
 ```
 
-### 06_Test_Cases.py
+### test_cases.py
 
 ```text
 PASS: BST empty traversals
