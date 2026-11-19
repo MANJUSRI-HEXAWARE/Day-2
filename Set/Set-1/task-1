@@ -1,0 +1,77 @@
+class Node:
+    def __init__(self, category):
+        self.category = category
+        self.left = None
+        self.right = None
+
+
+class BinarySearchTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, category):
+        def add(node, value):
+            if node is None:
+                return Node(value)
+            if value < node.category:
+                node.left = add(node.left, value)
+            elif value > node.category:
+                node.right = add(node.right, value)
+            return node
+        self.root = add(self.root, category)
+
+    def search(self, category):
+        node = self.root
+        while node is not None:
+            if category == node.category:
+                return True
+            node = node.left if category < node.category else node.right
+        return False
+
+    def inorder(self):
+        result = []
+        def visit(node):
+            if node:
+                visit(node.left)
+                result.append(node.category)
+                visit(node.right)
+        visit(self.root)
+        return result
+
+    def preorder(self):
+        result = []
+        def visit(node):
+            if node:
+                result.append(node.category)
+                visit(node.left)
+                visit(node.right)
+        visit(self.root)
+        return result
+
+    def postorder(self):
+        result = []
+        def visit(node):
+            if node:
+                visit(node.left)
+                visit(node.right)
+                result.append(node.category)
+        visit(self.root)
+        return result
+
+
+categories = [
+    "Grocery", "Electronics", "Fashion", "Beauty", "Books",
+    "Sports", "Toys", "Automotive", "Furniture", "Health",
+    "Home", "Jewelry", "Music", "Pet Supplies", "Stationery"
+]
+
+bst = BinarySearchTree()
+for category in categories:
+    bst.insert(category)
+
+print("Total categories:", len(categories))
+print("Search Electronics:", bst.search("Electronics"))
+print("Search Appliances:", bst.search("Appliances"))
+print("Inorder:", ", ".join(bst.inorder()))
+print("Preorder:", ", ".join(bst.preorder()))
+print("Postorder:", ", ".join(bst.postorder()))
