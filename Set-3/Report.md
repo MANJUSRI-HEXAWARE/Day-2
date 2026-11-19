@@ -1,8 +1,4 @@
-# Execution Report – Logistics Network and Delivery Windows
 
-**Project:** Logistics Network and Delivery Windows  
-**Language:** Python 3  
-**Dataset:** Representative sample hub codes, routes, parcel scans and hourly volumes
 
 ## 1. Algorithm Decision Table
 
@@ -125,6 +121,3 @@ The route is tokenized into alphabetic hub codes, then normalized to uppercase. 
 | Palindrome | Mixed case and separators | Correct palindrome result |
 | Palindrome | Nonmatching hub codes | False |
 
-## 8. Summary
-
-The BST supports ordered hub-code management; hashing detects repeat parcel scans; BFS and DFS support network routing and reachability; sliding windows identify peak operational periods; and two pointers validate symmetric route descriptions. The programs use sample data because the assignment does not specify a dataset.
