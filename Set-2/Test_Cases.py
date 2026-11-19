@@ -1,7 +1,6 @@
 import importlib.util
 from pathlib import Path
 
-
 def load(filename, name):
     spec = importlib.util.spec_from_file_location(name, Path(__file__).parent / filename)
     module = importlib.util.module_from_spec(spec)
