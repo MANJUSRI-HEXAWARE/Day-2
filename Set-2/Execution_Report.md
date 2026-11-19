@@ -114,7 +114,3 @@ PASS: Merge preserves duplicates
 PASS: Merge negative and positive
 All 26 tests passed.
 ```
-
-## Result
-
-All five task programs ran successfully. The test suite completed with **26 of 26 tests passed**.
