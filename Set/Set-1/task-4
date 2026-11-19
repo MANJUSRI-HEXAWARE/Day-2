@@ -1,0 +1,20 @@
+hourly_requests_per_minute = [
+    120, 100, 90, 85, 95, 140, 210, 330,
+    450, 540, 620, 700, 760, 820, 900, 860,
+    730, 650, 580, 480, 390, 300, 220, 160
+]
+window_size = 3
+hourly_requests = [rpm * 60 for rpm in hourly_requests_per_minute]
+window_total = sum(hourly_requests[:window_size])
+maximum = window_total
+best_start = 0
+for end in range(window_size, len(hourly_requests)):
+    window_total += hourly_requests[end] - hourly_requests[end - window_size]
+    if window_total > maximum:
+        maximum = window_total
+        best_start = end - window_size + 1
+print("Hourly RPM:", hourly_requests_per_minute)
+print(f"Busiest 3-hour window: {best_start:02d}:00 to {best_start + window_size:02d}:00")
+print("Total requests in window:", maximum)
+print("Average RPM during peak:", maximum // (window_size * 60))
+print("Peak hourly RPM:", max(hourly_requests_per_minute))
